@@ -1,10 +1,7 @@
-NAME="OrionOS"
-PRETTY_NAME="OrionOS"
-ID=orionos
-ID_LIKE=arch
+NAME="satrOS"
+PRETTY_NAME="satrOS"
+ID=satros
 BUILD_ID=rolling
 ANSI_COLOR="38;2;23;147;209"
-HOME_URL="https://orionos.org/"
-DOCUMENTATION_URL="https://github.com/nieeewiem/orionos"
-BUG_REPORT_URL="https://github.com/nieeewiem/orionos/issues"
-LOGO=orionos-logo
+HOME_URL="https://satros.org/"
+LOGO=satros-logo
