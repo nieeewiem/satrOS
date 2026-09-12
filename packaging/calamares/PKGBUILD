@@ -1,0 +1,66 @@
+# Calamares is not currently shipped by the official Arch repositories.
+# This package is built from the maintained EndeavourOS Calamares fork and
+# installed into a temporary local repository before mkarchiso runs.
+
+pkgname=calamares
+pkgver=26.03.2.3
+pkgrel=2
+pkgdesc='Calamares installer framework for satrOS'
+arch=('x86_64')
+url='https://github.com/endeavouros-team/calamares'
+license=('GPL3')
+makedepends=(
+  'cmake'
+  'extra-cmake-modules'
+  'gawk'
+  'python-jsonschema'
+  'python-pyaml'
+  'python-unidecode'
+)
+depends=(
+  'cryptsetup'
+  'dmidecode'
+  'doxygen'
+  'gptfdisk'
+  'hwinfo'
+  'kconfig'
+  'kcoreaddons'
+  'kparts'
+  'kpmcore'
+  'kservice'
+  'ki18n'
+  'kwidgetsaddons'
+  'libpwquality'
+  'networkmanager'
+  'polkit-qt6'
+  'pybind11'
+  'python'
+  'qt6-declarative'
+  'qt6-svg'
+  'qt6-tools'
+  'qt6-webengine'
+  'solid'
+  'squashfs-tools'
+  'upower'
+  'yaml-cpp'
+)
+provides=('calamares')
+conflicts=('calamares-git')
+options=('!strip' '!emptydirs')
+source=("https://github.com/endeavouros-team/calamares/archive/refs/tags/${pkgver}.tar.gz")
+sha256sums=('fcf6b52c82f6f55f81b9586e6888db481d4a40e1814cef9727e5b699510dbc27')
+
+build() {
+  cmake -B build -S "${srcdir}/calamares-${pkgver}" \
+    -DWITH_QT6=ON \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DINSTALL_CONFIG=OFF \
+    -DSKIP_MODULES='dracut dummycpp dummyprocess dummypython dummypythonqt finishedq initcpio keyboardq license localeq notesqml oemid openrcdmcryptcfg plymouthcfg plasmalnf services-openrc summaryq tracking webview welcomeq'
+  cmake --build build
+}
+
+package() {
+  DESTDIR="${pkgdir}" cmake --install build
+}

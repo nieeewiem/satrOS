@@ -2,6 +2,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+set -u
+
 get_cmdline() {
     local param
     for param in $(</proc/cmdline); do
@@ -18,7 +20,17 @@ mirror="$(get_cmdline mirror)"
 [[ "$mirror" == 'auto' ]] && mirror="$(get_cmdline archiso_http_srv)"
 [[ -n "$mirror" ]] || exit 0
 
-mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig
+case "$mirror" in
+    http://*|https://*) ;;
+    *)
+        printf 'Ignoring invalid mirror URL: %s\n' "$mirror" >&2
+        exit 0
+        ;;
+esac
+
+if [[ -f /etc/pacman.d/mirrorlist ]]; then
+    cp -- /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig
+fi
 cat >/etc/pacman.d/mirrorlist <<EOF
 #
 # Arch Linux repository mirrorlist

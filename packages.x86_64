@@ -7,12 +7,6 @@ kconfig
 kservice
 kwidgetsaddons
 polkit-kde-agent
-polkit-kde-agent
-kcrash
-kcoreaddons
-ki18n
-kconfig
-kservice
 alsa-utils
 amd-ucode
 arch-install-scripts
@@ -23,14 +17,12 @@ bcachefs-tools
 bind
 bolt
 brltty
-broadcom-wl
 btrfs-progs
 clonezilla
 cloud-init
 cryptsetup
 darkhttpd
 ddrescue
-dhcpcd
 diffutils
 dmidecode
 dmraid
@@ -57,7 +49,7 @@ hyperv
 intel-ucode
 irssi
 iw
-iwd
+networkmanager
 jfsutils
 kitty-terminfo
 kmscon-terminfo
@@ -103,6 +95,7 @@ openvpn
 partclone
 parted
 partimage
+pciutils
 pcsclite
 ppp
 pptpclient
@@ -136,7 +129,6 @@ vim
 virtualbox-guest-utils-nox
 vpnc
 wireless-regdb
-wireless_tools
 wpa_supplicant
 wvdial
 xdg-utils
@@ -147,11 +139,4 @@ calamares
 xorg-server
 xorg-xinit
 openbox
-calamares
-brave-bin
-heroic-games-launcher-bin
-xcb-util-cursor
-openbox
-xorg-server
-xorg-xinit
 xcb-util-cursor

@@ -1,0 +1,13 @@
+# Local build trees, ISO inspection directories, VM test outputs and caches
+/satros-build-*/
+/satros-calam-test-*/
+/satros-calamares-*/
+/satros-iso-inspect/
+/satros-local-repo/
+/satros-pkgcache/
+/satros-out-*/
+/satros-vm-*/
+/satros-bios-*/
+/satros-uefi-*/
+*.log
+

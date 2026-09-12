@@ -5,17 +5,11 @@
   selected: true
   packages:
     - name: "Linux (Standardowe)"
-      packages:
-        - linux
-        - linux-headers
+      packages: [ linux, linux-headers ]
     - name: "Linux LTS (Długoterminowe wsparcie)"
-      packages:
-        - linux-lts
-        - linux-lts-headers
+      packages: [ linux-lts, linux-lts-headers ]
     - name: "Linux Zen (Zoptymalizowane pod wydajność/gry)"
-      packages:
-        - linux-zen
-        - linux-zen-headers
+      packages: [ linux-zen, linux-zen-headers ]
 
 - name: "Środowisko graficzne"
   description: "Wybierz jeden lub więcej pulpitów"
@@ -23,48 +17,31 @@
   hidden: false
   packages:
     - name: "KDE Plasma"
-      packages:
-        - plasma-desktop
-        - sddm
+      packages: [ plasma-desktop, sddm ]
     - name: "GNOME"
-      packages:
-        - gnome
-        - gdm
+      packages: [ gnome, gdm ]
     - name: "Hyprland"
-      packages:
-        - hyprland
-        - waybar
+      packages: [ hyprland, waybar ]
     - name: "i3wm (goły)"
-      packages:
-        - i3-wm
+      packages: [ i3-wm ]
     - name: "i3wm (z autorskim configiem)"
-      packages:
-        - i3-wm
-        - polybar
-        - rofi
+      packages: [ i3-wm, polybar, rofi ]
 
 - name: "Przeglądarki internetowe"
   type: "checkbox"
   hidden: false
   packages:
     - name: "Firefox"
-      packages:
-        - firefox
+      packages: [ firefox ]
     - name: "Chromium"
-      packages:
-        - chromium
-    - name: "Brave"
-      packages:
-        - brave-bin
+      packages: [ chromium ]
 
 - name: "Sterowniki NVIDIA"
   type: "checkbox"
   hidden: false
   packages:
     - name: "NVIDIA Drivers (nvidia-open + utils)"
-      packages:
-        - nvidia-open
-        - nvidia-utils
+      packages: [ nvidia-open, nvidia-utils ]
 
 - name: "Dodatkowe programy"
   type: "checkbox"
@@ -72,8 +49,6 @@
   packages:
     - name: "Steam"
       packages: [ steam ]
-    - name: "Heroic Games Launcher"
-      packages: [ heroic-games-launcher ]
     - name: "htop"
       packages: [ htop ]
     - name: "GIMP"
@@ -84,7 +59,5 @@
       packages: [ discord ]
     - name: "Telegram"
       packages: [ telegram-desktop ]
-    - name: "Spotify"
-      packages: [ spotify ]
     - name: "VLC"
       packages: [ vlc ]

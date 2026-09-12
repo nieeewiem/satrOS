@@ -1,0 +1,51 @@
+# Repackage the pinned EndeavourOS Calamares binary without the obsolete
+# ckbcomp dependency, which is no longer present in current Arch repositories.
+# The package contents are not modified; only the pacman dependency metadata is
+# made compatible with current Arch package names.
+
+pkgname=calamares
+pkgver=26.03.2.3
+pkgrel=1
+pkgdesc='Calamares installer framework for satrOS'
+arch=('x86_64')
+url='https://github.com/endeavouros-team/calamares'
+license=('GPL3')
+depends=(
+  'cryptsetup'
+  'dmidecode'
+  'doxygen'
+  'gptfdisk'
+  'hwinfo'
+  'kconfig'
+  'kcoreaddons'
+  'kparts'
+  'kpmcore'
+  'kservice'
+  'ki18n'
+  'kwidgetsaddons'
+  'libpwquality'
+  'networkmanager'
+  'polkit-qt6'
+  'pybind11'
+  'python'
+  'qt6-declarative'
+  'qt6-svg'
+  'qt6-tools'
+  'qt6-webengine'
+  'solid'
+  'squashfs-tools'
+  'rsync'
+  'upower'
+  'yaml-cpp'
+)
+provides=('calamares')
+conflicts=('calamares-git')
+options=('!strip' '!emptydirs')
+source=("https://mirror.moson.org/endeavouros/repo/endeavouros/x86_64/calamares-${pkgver}-1-any.pkg.tar.zst")
+sha256sums=('03e92c4c9f3b3201765c06d620cc18a17af8c6210bcf60dcdd6c8eccac99f7b4')
+
+package() {
+  bsdtar -xf "${srcdir}/calamares-${pkgver}-1-any.pkg.tar.zst" \
+    --exclude .BUILDINFO --exclude .MTREE --exclude .PKGINFO \
+    --exclude .INSTALL --exclude .Changelog -C "${pkgdir}"
+}

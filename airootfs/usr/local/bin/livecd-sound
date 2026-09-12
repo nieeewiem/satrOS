@@ -186,6 +186,11 @@ pick_a_card() {
     mapfile -t usable_cards < <(list_non_pcsp_cards)
     num_usable_cards="${#usable_cards[@]}"
 
+    if (( num_usable_cards == 0 )); then
+        systemd-cat -t "livecdsound" printf "No usable sound card detected\n"
+        return 0
+    fi
+
     if (( num_usable_cards == 1 )); then
         systemd-cat -t "livecdsound" printf "Only one sound card is detected\n"
         exit 0

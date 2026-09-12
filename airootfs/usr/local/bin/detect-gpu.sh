@@ -1,31 +1,43 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
 
-echo "=== OrionOS: Wykrywanie sprzętu GPU ==="
+# Report hardware only.  Installing a kernel module while Calamares is
+# running can break the live session, so package selection remains explicit.
+set -u
 
-GPU_INFO=$(lspci | grep -E "VGA|3D|Display")
-PACKAGES=()
-
-if echo "$GPU_INFO" | grep -iq "nvidia"; then
-    echo "-> Wykryto kartę NVIDIA"
-    PACKAGES+=(nvidia-open nvidia-utils lib32-nvidia-utils vulkan-icd-loader lib32-vulkan-icd-loader)
+strict=0
+if [[ "${1:-}" == "--strict" ]]; then
+    strict=1
 fi
 
-if echo "$GPU_INFO" | grep -iq "amd\|radeon"; then
-    echo "-> Wykryto układ AMD"
-    PACKAGES+=(xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon)
+printf '%s\n' '=== satrOS: wykrywanie GPU ==='
+
+if ! command -v lspci >/dev/null 2>&1; then
+    printf '%s\n' 'Nie znaleziono lspci (pakiet pciutils); GPU nieznane.'
+    (( strict )) && exit 2
+    exit 0
 fi
 
-if echo "$GPU_INFO" | grep -iq "intel"; then
-    echo "-> Wykryto układ Intel"
-    PACKAGES+=(vulkan-intel lib32-vulkan-intel)
+mapfile -t gpu_lines < <(lspci -D 2>/dev/null | grep -Ei 'VGA compatible controller|3D controller|Display controller' || true)
+
+if ((${#gpu_lines[@]} == 0)); then
+    printf '%s\n' 'Nie wykryto kontrolera grafiki PCI (GPU nieznane lub niedostępne).'
+    (( strict )) && exit 2
+    exit 0
 fi
 
-if [ ${#PACKAGES[@]} -gt 0 ]; then
-    echo "Instalacja pakietów: ${PACKAGES[*]}"
-    pacman -S --noconfirm --needed "${PACKAGES[@]}"
-else
-    echo "Nie wykryto wspieranych układów GPU."
-fi
+detected=0
+for line in "${gpu_lines[@]}"; do
+    ((detected += 1))
+    printf 'GPU: %s\n' "$line"
+    case "$line" in
+        *NVIDIA*|*nvidia*) printf '%s\n' 'Producent: NVIDIA (sterownik do wyboru podczas instalacji)' ;;
+        *AMD*|*ATI*|*Radeon*|*AMD/ATI*) printf '%s\n' 'Producent: AMD (sterownik otwarty)' ;;
+        *Intel*|*INTEL*) printf '%s\n' 'Producent: Intel (sterownik otwarty)' ;;
+        *VirtualBox*|*VMware*|*Virtio*|*QXL*|*Bochs*|*Red\ Hat*|*Microsoft*) printf '%s\n' 'Typ: wirtualne GPU' ;;
+        *) printf '%s\n' 'Producent: nieznany (użyj bezpiecznego fallbacku kernela)' ;;
+    esac
+done
 
-echo "=== Konfiguracja GPU zakończona ==="
+printf 'Liczba kontrolerów GPU: %d\n' "$detected"
+printf '%s\n' '=== zakończono wykrywanie GPU (bez instalacji sterowników) ==='
+exit 0

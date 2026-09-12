@@ -5,6 +5,8 @@ welcomeExpandingLogo: true
 windowExpanding: normal
 windowSize: 800px,520px
 windowPlacement: center
+slideshowAPI: 2
+slideshow: "show.qml"
 
 strings:
     productName:         satrOS
@@ -21,6 +23,6 @@ images:
     productWelcome:      "languages.png"
 
 style:
-   sidebarBackground:    "#2c3133"
-   sidebarText:          "#FFFFFF"
-   sidebarTextSelect:    "#4d915e"
+   SidebarBackground:    "#2c3133"
+   SidebarText:          "#FFFFFF"
+   SidebarTextSelect:    "#4d915e"
