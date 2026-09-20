@@ -18,6 +18,7 @@ file_permissions=(
   ["/etc/shadow"]="0:0:400"
   ["/usr/local/bin/detect-gpu.sh"]="0:0:755"
   ["/usr/local/bin/detect-cpu.sh"]="0:0:755"
+  ["/usr/local/bin/satros-generate-initramfs"]="0:0:755"
   ["/root"]="0:0:750"
   ["/root/.xinitrc"]="0:0:755"
   ["/root/.config/openbox/autostart"]="0:0:755"

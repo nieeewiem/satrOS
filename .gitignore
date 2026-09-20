@@ -1,4 +1,5 @@
 # Local build trees, ISO inspection directories, VM test outputs and caches
+/artifacts/
 /satros-build-*/
 /satros-calam-test-*/
 /satros-calamares-*/
@@ -10,4 +11,3 @@
 /satros-bios-*/
 /satros-uefi-*/
 *.log
-

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+shopt -s nullglob
+kernels=(/usr/lib/modules/*/vmlinuz)
+
+if ((${#kernels[@]} == 0)); then
+    printf '%s\n' 'satrOS: no installed kernel image found under /usr/lib/modules' >&2
+    exit 1
+fi
+
+# The live image needs this drop-in to build its archiso initramfs.  mkinitcpio
+# also loads *.conf from this directory for ordinary builds, so leaving it in
+# the installed root filesystem would make the installed initramfs try to
+# mount /run/archiso/bootmnt on every boot.
+archiso_config=/etc/mkinitcpio.conf.d/archiso.conf
+if [[ -f "$archiso_config" ]]; then
+    mv -- "$archiso_config" "${archiso_config}.live-disabled"
+fi
+
+for kernel in "${kernels[@]}"; do
+    version="$(basename -- "$(dirname -- "$kernel")")"
+    /usr/bin/mkinitcpio \
+        -c /etc/mkinitcpio.conf \
+        -k "$kernel" \
+        -g "/boot/initramfs-${version}.img"
+done
